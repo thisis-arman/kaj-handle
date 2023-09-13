@@ -1,9 +1,36 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Provider/UserProvider";
+import toast, { Toaster } from 'react-hot-toast';
+import SocialLogin from "../../Component/Shared/SocialLogin";
 
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
+    const { createUser, updateUserProfile } = useContext(AuthContext)
     const [passwordError, setPassError] = useState('')
+    const [image, setImage] = useState('')
+    const navigate = useNavigate()
 
+    const handleImage = (event) => {
+        event.preventDefault();
+        const selectedImage = event.target.files[0]
+        console.log(selectedImage)
+        const formData = new FormData()
+        formData.append("file", selectedImage)
+        formData.append("upload_preset", 'vcvltcqx')
+        fetch(`https://api.cloudinary.com/v1_1/dshjcmrd0/image/upload`, {
+            method: "POST",
+            body: formData
+        })
+            .then(res => res.json())
+            .then(data => {
+                setImage(data.secure_url)
+
+            })
+
+    };
+
+    console.log({ image })
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -18,6 +45,23 @@ const RegisterPage = () => {
 
         }
         console.log(name, email, password, password_confirmation, profession);
+        createUser(email, password)
+            .then(data => {
+                console.log({ data })
+
+                const createdUser = data.user
+                console.log(createdUser)
+                updateUserProfile(name, image)
+                    .then(data => {
+                        if (data.user) {
+
+                            toast.success('Signed up Successfully!')
+                        }
+                    })
+                navigate('/')
+
+            })
+            .catch(err => console.log(err))
 
 
 
@@ -147,6 +191,19 @@ const RegisterPage = () => {
                                         className="mt-1 py-2 pl-4 w-full rounded-md border-gray-200 bg-gray-300 text-sm text-gray-500 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                                     />
                                 </div>
+                                <div className="col-span-6">
+                                    <label
+                                        htmlFor="Email"
+                                        className="block text-sm font-medium text-gray-500 dark:text-gray-200"
+                                    >
+                                        Image
+                                    </label>
+
+
+
+                                    <input onChange={handleImage} type="file" name="image" className="mt-1 py-2 pl-4 w-full rounded-md border-gray-200 bg-gray-300 text-sm text-gray-500 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200" id="" />
+
+                                </div>
 
                                 <div className="col-span-6 sm:col-span-3">
                                     <label
@@ -178,8 +235,8 @@ const RegisterPage = () => {
                                         name="password_confirmation"
                                         className="mt-1 py-2 pl-4 w-full rounded-md border-gray-200 bg-gray-300 text-sm text-gray-500 shadow-sm dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200"
                                     />
+                                    <p className="text-red-400 w-full mt-2 ">{passwordError}</p>
                                 </div>
-                                <p className="text-red-400">{passwordError}</p>
 
                                 <div className="col-span-6">
                                     <label htmlFor="MarketingAccept" className="flex gap-4">
@@ -225,7 +282,12 @@ const RegisterPage = () => {
                                     </p>
                                 </div>
                             </form>
+                            <SocialLogin />
                         </div>
+                        <Toaster
+                            position="top-center"
+                            reverseOrder={false}
+                        />
                     </main>
                 </div>
             </section >

@@ -1,10 +1,16 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Provider/UserProvider";
 
 
 const Navbar = () => {
+    const { user, LogOut } = useContext(AuthContext)
+    const handleLogout = () => {
+        LogOut()
+    }
     return (
         <div>
-            <header className=" text-white bg-gray-800">
+            <header className=" text-white bg-gray-800 py-2">
                 <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
                         <div className="flex-1 md:flex md:items-center md:gap-12">
@@ -50,16 +56,34 @@ const Navbar = () => {
                                     </li>
                                 </ul>
                             </nav>
-                            <div className="flex items-center gap-4">
-                                <div className="sm:flex sm:gap-4">
-                                    <a className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow dark:hover:bg-teal-500" href="/">
-                                        Login
-                                    </a>
-                                    <div className="hidden sm:flex">
-                                        <Link className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 dark:bg-gray-800 dark:text-white dark:hover:text-white/75" to="/register">
-                                            Register
-                                        </Link>
+                            <div className="flex items-center  gap-4">
+                                <div className="sm:flex  sm:gap-4">
+                                    <div className="dropdown dropdown-end">
+                                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                                            <div className="w-10 rounded-full border">
+                                                <img src={user.photoURL} />
+                                            </div>
+                                        </label>
+                                        <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content text-white   rounded-box w-52">
+                                            <li>
+                                                <Link to='/dashboard' className="justify-between hover:text-gray-400">
+                                                    Dashboard
+                                                </Link>
+                                            </li>
+                                            {user.email ? <li onClick={handleLogout}> <Link className='hover:text-gray-400' to=' /'> Logout</Link></li> :
+                                                <li><Link className='hover:text-gray-400' to='/register'> Register</Link></li>}
+                                        </ul>
                                     </div>
+
+                                    {/*   {user.email ? <Link className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow dark:hover:bg-teal-500" to="/login">
+                                        Login
+                                    </Link> :
+
+                                        <div className="hidden sm:flex">
+                                            <Link className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600 dark:bg-gray-800 dark:text-white dark:hover:text-white/75" to="/register">
+                                                Register
+                                            </Link>
+                                        </div>} */}
                                 </div>
                                 <div className="block md:hidden">
                                     <button className="rounded bg-gray-100 p-2 text-gray-600 transition hover:text-gray-600/75 dark:bg-gray-800 dark:text-white dark:hover:text-white/75">
@@ -71,7 +95,7 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div >
             </header >
 
 
