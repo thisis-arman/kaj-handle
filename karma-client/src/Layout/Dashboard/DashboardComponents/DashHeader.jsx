@@ -1,6 +1,6 @@
 
 
-const DashHeader = () => {
+const DashHeader = ({ user }) => {
     return (
         <div>
             {/*
@@ -124,14 +124,14 @@ const DashHeader = () => {
                                 <span className="sr-only">Menu</span>
                                 <img
                                     alt="Man"
-                                    src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                                    src={user?.photoURL}
                                     className="h-10 w-10 rounded-full object-cover"
                                 />
 
                                 <p className="ms-2 hidden text-left text-xs sm:block">
-                                    <strong className="block font-medium">Eric Frusciante</strong>
+                                    <strong className="block font-medium">{user?.displayName}</strong>
 
-                                    <span className="text-gray-500"> eric@frusciante.com </span>
+                                    <span className="text-gray-500"> {user?.email} </span>
                                 </p>
 
                                 <svg
@@ -152,7 +152,7 @@ const DashHeader = () => {
 
                     <div className="mt-8">
                         <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-                            Welcome Back, Barry!
+                            Welcome Back, {user?.displayName}!
                         </h1>
 
                         <p className="mt-1.5 text-sm text-gray-500">
