@@ -3,6 +3,8 @@ import Main from "../Layout/Main/Main";
 import HomePage from "../Pages/HomePage/HomePage";
 import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import Dashboard from "../Layout/Dashboard/Dashboard";
+import Tasks from "../Layout/Dashboard/UserDashboardPages/Tasks/Tasks";
+import Profile from "../Layout/Dashboard/UserDashboardPages/Profile/Profile";
 
 const router = createBrowserRouter([
     {
@@ -21,7 +23,17 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <Dashboard />
+        element: <Dashboard />,
+        children: [
+            {
+                path: '/dashboard/task',
+                element: <Tasks />
+            },
+            {
+                path: 'profile',
+                element: <Profile />
+            }
+        ]
     }
 ]);
 
