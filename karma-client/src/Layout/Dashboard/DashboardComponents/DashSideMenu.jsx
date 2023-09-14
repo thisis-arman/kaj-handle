@@ -7,11 +7,13 @@ const DashSideMenu = () => {
             <div className="flex h-screen w-16  flex-col justify-between border-e bg-white ">
                 <div>
                     <div className="inline-flex h-16 w-16 items-center justify-center">
-                        <span
-                            className="grid h-10 w-10 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600"
-                        >
-                            Logo
-                        </span>
+                        <Link to='/'>
+                            <span
+                                className="grid h-10 w-10 place-content-center rounded-lg   text-xs text-gray-600"
+                            >
+                                <img src="https://i.ibb.co/Jkfsw9c/app-1.png" alt="" />
+                            </span>
+                        </Link>
                     </div>
 
                     <div className="border-t border-gray-100">
@@ -179,7 +181,7 @@ const DashSideMenu = () => {
                 </div>
             </div>
 
-        </div>
+        </div >
     );
 };
 
