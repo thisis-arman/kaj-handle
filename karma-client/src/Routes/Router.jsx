@@ -5,6 +5,8 @@ import RegisterPage from "../Pages/RegisterPage/RegisterPage";
 import Dashboard from "../Layout/Dashboard/Dashboard";
 import Tasks from "../Layout/Dashboard/UserDashboardPages/Tasks/Tasks";
 import Profile from "../Layout/Dashboard/UserDashboardPages/Profile/Profile";
+import ProtectedRoute from "./ProtectedRoute";
+import LoginPage from "../Pages/RegisterPage/LoginPage/LoginPage";
 
 const router = createBrowserRouter([
     {
@@ -18,12 +20,16 @@ const router = createBrowserRouter([
             {
                 path: '/register',
                 element: <RegisterPage />
+            },
+            {
+                path: '/login',
+                element: <LoginPage />
             }
         ]
     },
     {
         path: '/dashboard',
-        element: <Dashboard />,
+        element: <ProtectedRoute><Dashboard /></ProtectedRoute >,
         children: [
             {
                 path: '/dashboard/task',

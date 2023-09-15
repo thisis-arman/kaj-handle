@@ -59,7 +59,7 @@ const Navbar = () => {
                                     <div className="dropdown dropdown-end">
                                         <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                                             <div className="w-10 rounded-full border">
-                                                <img src={user.photoURL} />
+                                                <img src={user?.photoURL} />
                                             </div>
                                         </label>
                                         <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content text-white   rounded-box w-52">
@@ -68,8 +68,10 @@ const Navbar = () => {
                                                     Dashboard
                                                 </Link>
                                             </li>
-                                            {user.email ? <li onClick={handleLogout}> <Link className='hover:text-gray-400' to=' /'> Logout</Link></li> :
-                                                <li><Link className='hover:text-gray-400' to='/register'> Register</Link></li>}
+                                            {user?.email ? <li onClick={handleLogout}> <Link className='hover:text-gray-400' to='/'> Logout</Link></li> :
+                                                <> <li><Link className='hover:text-gray-400' to='/login'> Login</Link></li>
+                                                    <li><Link className='hover:text-gray-400' to='/register'> Register</Link></li></>}
+
                                         </ul>
                                     </div>
 
